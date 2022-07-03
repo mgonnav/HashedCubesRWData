@@ -100,8 +100,8 @@ int main() {
   outFile.write((char*)&days[0], sizeof(uint8_t) * days.size());
   outFile.write((char*)&hrs[0], sizeof(uint8_t) * days.size());
   outFile.write((char*)&timestamps[0], sizeof(uint32_t) * days.size());
-  // outFile.write(reinterpret_cast<char*>(&classes[0]), sizeof(uint8_t) * days.size());
-  // outFile.write(reinterpret_cast<char*>(&color_classes[0]), sizeof(float) * days.size());
+  outFile.write((char*)(&classes[0]), sizeof(uint8_t) * days.size());
+  outFile.write((char*)(&color_classes[0]), sizeof(float) * days.size());
   outFile.close();
 
   std::cout << "Reading..." << std::endl;
