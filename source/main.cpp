@@ -20,7 +20,7 @@ struct coordinates_t {
 BinaryHeader header;
 
 std::string path = "../data/brightkite.nds";
-std::string write_path = "../data/brightkite_with_classes_ni.nds";
+std::string write_path = "../data/california_with_classes.nds";
 
 template <typename T>
 void get_data(std::vector<uint8_t>& data, uint8_t offset) {
@@ -42,14 +42,47 @@ T* get_entry(std::vector<uint8_t>& data, size_t id) {
 }
 
 int main() {
-  std::ifstream infile("../data/brightkite_with_classes_ni.csv");
+  std::ifstream infile("../data/california_with_classes.csv");
 
-  std::vector<uint8_t> days;
-  std::vector<uint8_t> hrs;
-  std::vector<uint32_t> timestamps;
-  std::vector<coordinates_t> coords;
-  std::vector<uint8_t> classes;
-  std::vector<float> color_classes;
+  // std::vector<uint8_t> Start_Lat;
+  // std::vector<uint8_t> Start_Lng;
+  // std::vector<uint8_t> End_Lat;
+  // std::vector<uint8_t> End_Lng;
+
+  std::vector<uint8_t> ID;
+  std::vector<uint8_t> Severity;
+  std::vector<std::string> Start_Time;
+  std::vector<std::string> End_Time;
+  std::vector<coordinates_t> start_coords;
+  std::vector<coordinates_t> end_coords;
+  std::vector<uint8_t> Distance;
+  std::vector<uint8_t> Temperature;
+  std::vector<uint8_t> Wind_Chill;
+  std::vector<uint8_t> Humidity;
+  std::vector<uint8_t> Pressure;
+  std::vector<uint8_t> Visibility;
+  std::vector<std::string> Wind_Direction;
+  std::vector<uint8_t> Wind_Speed;
+  std::vector<uint8_t> Precipitation;
+  std::vector<std::string> Weather_Condition;
+  std::vector<uint8_t> Amenity;
+  std::vector<uint8_t> Bump;
+  std::vector<uint8_t> Crossing;
+  std::vector<uint8_t> Give_Way;
+  std::vector<uint8_t> Junction;
+  std::vector<uint8_t> No_Exit;
+  std::vector<uint8_t> Railway;
+  std::vector<uint8_t> Roundabout;
+  std::vector<uint8_t> Station;
+  std::vector<uint8_t> Stop;
+  std::vector<uint8_t> Traffic_Calming;
+  std::vector<uint8_t> Traffic_Signal;
+  std::vector<uint8_t> Turning_Loop;
+  std::vector<uint8_t> Sunrise_Sunset;
+  std::vector<uint8_t> Civil_Twilight;
+  std::vector<uint8_t> Nautical_Twilight;
+  std::vector<uint8_t> Astronomical_Twilight;
+  std::vector<uint8_t> cluster_class;
 
   std::string line, word;
 
@@ -57,128 +90,126 @@ int main() {
 
   while (getline(infile, line)) {
     std::stringstream str(line);
-    // std::cout << str.str() << std::endl;
+    
+    getline(str, word, ',');
+    // ID.push_back(std::stoi(word));
 
     getline(str, word, ',');
-    days.push_back(std::stoi(word));
+    // Severity.push_back(std::stoi(word));
 
     getline(str, word, ',');
-    hrs.push_back(std::stoi(word));
+    Start_Time.push_back(word);
+    getline(str, word, ',');
+    End_Time.push_back(word);
 
     getline(str, word, ',');
-    timestamps.push_back(std::stoi(word));
+    float start_lat = std::stof(word);
+    getline(str, word, ',');
+    float start_lon = std::stof(word);
+    start_coords.push_back(coordinates_t(start_lat, start_lon));
 
     getline(str, word, ',');
-    float lat = std::stof(word);
+    float end_lat = std::stof(word);
     getline(str, word, ',');
-    float lon = std::stof(word);
-    coords.push_back(coordinates_t(lat, lon));
+    float end_lon = std::stof(word);
+    end_coords.push_back(coordinates_t(end_lat, end_lon));
 
     getline(str, word, ',');
-    classes.push_back(std::stoi(word));
+    // Distance.push_back(std::stoi(word));
 
-    getline(str, word);
-    color_classes.push_back(std::stof(word));
+    getline(str, word, ',');
+    // Temperature.push_back(std::stoi(word));
+
+    getline(str, word, ',');
+    // Wind_Chill.push_back(std::stoi(word));
+
+    getline(str, word, ',');
+    // Humidity.push_back(std::stoi(word));
+
+    getline(str, word, ',');
+    // Pressure.push_back(std::stoi(word));
+
+    getline(str, word, ',');
+    // Visibility.push_back(std::stoi(word));
+
+    getline(str, word, ',');
+    Wind_Direction.push_back(word);
+
+    getline(str, word, ',');
+    // Wind_Speed.push_back(std::stoi(word));
+
+    getline(str, word, ',');
+    // Precipitation.push_back(std::stoi(word));
+
+    getline(str, word, ',');
+    Weather_Condition.push_back(word);
+
+    getline(str, word, ',');
+    // Amenity.push_back(std::stoi(word));
+
+    getline(str, word, ',');
+    // Bump.push_back(std::stoi(word));
+
+    getline(str, word, ',');
+    // Crossing.push_back(std::stoi(word));
+
+    getline(str, word, ',');
+    // Give_Way.push_back(std::stoi(word));
+
+    getline(str, word, ',');
+    // Junction.push_back(std::stoi(word));
+
+    getline(str, word, ',');
+    // No_Exit.push_back(std::stoi(word));
+
+    getline(str, word, ',');
+    // Railway.push_back(std::stoi(word));
+
+    getline(str, word, ',');
+    // Roundabout.push_back(std::stoi(word));
+
+    getline(str, word, ',');
+    // Station.push_back(std::stoi(word));
+
+    getline(str, word, ',');
+    // Stop.push_back(std::stoi(word));
+
+    getline(str, word, ',');
+    // Traffic_Calming.push_back(std::stoi(word));
+
+    getline(str, word, ',');
+    // Traffic_Signal.push_back(std::stoi(word));
+
+    getline(str, word, ',');
+    // Turning_Loop.push_back(std::stoi(word));
+
+    getline(str, word, ',');
+    // Sunrise_Sunset.push_back(std::stoi(word));
+
+    getline(str, word, ',');
+    // Civil_Twilight.push_back(std::stoi(word));
+
+    getline(str, word, ',');
+    // Nautical_Twilight.push_back(std::stoi(word));
+
+    getline(str, word, ',');
+    // Astronomical_Twilight.push_back(std::stoi(word));
+
+    getline(str, word, ',');
+    cluster_class.push_back(std::stoi(word));
   }
 
-  for (size_t i = 0; i < 10; ++i)
-    std::cout << +days[i] << " " << +hrs[i] << " " << timestamps[i] << " " <<
-              coords[i].lat << " " << coords[i].lon << " " << +classes[i] << " " <<
-              color_classes[i] << "\n";
-
-  std::ofstream outFile("../data/brightkite_with_classes_ni.nds",
+  std::ofstream outFile("../data/california_with_classes.nds",
                         std::ios::binary);
 
-  std::ifstream infile3("../data/brightkite.nds", std::ios::binary);
-
-  infile3.read((char*)&header, sizeof(BinaryHeader));
-
-  infile3.close();
-
+  header.records = 25329;
+  header.bytes = 0;
   outFile.write((char*)&header, sizeof(BinaryHeader));
-  outFile.write((char*)&coords[0], sizeof(coordinates_t) * days.size());
-  outFile.write((char*)&days[0], sizeof(uint8_t) * days.size());
-  outFile.write((char*)&hrs[0], sizeof(uint8_t) * days.size());
-  outFile.write((char*)&timestamps[0], sizeof(uint32_t) * days.size());
-  // outFile.write(reinterpret_cast<char*>(&classes[0]), sizeof(uint8_t) * days.size());
-  // outFile.write(reinterpret_cast<char*>(&color_classes[0]), sizeof(float) * days.size());
+  outFile.write((char*)&start_coords[0], sizeof(coordinates_t) * start_coords.size());
+  outFile.write((char*)&end_coords[0], sizeof(coordinates_t) * start_coords.size());
+  // outFile.write((char*)&Wind_Direction[0], sizeof(char) * start_coords.size());
+  outFile.write((char*)&cluster_class[0], sizeof(uint8_t) * start_coords.size());
   outFile.close();
-
-  std::cout << "Reading..." << std::endl;
-
-  std::ifstream infile2("../data/brightkite_with_classes_ni.nds",
-                        std::ios::binary);
-
-  infile2.read((char*)&header, sizeof(BinaryHeader));
-
-  infile2.close();
-
-  std::cout << "Total number of records: " << header.records << "\n";
-
-  // Read Dimensions
-  std::vector<uint8_t> data;
-
-  // Read day_of_week
-  typedef uint8_t categorical_t;
-  uint8_t offset = 8;
-  get_data<categorical_t>(data, offset);
-
-  // for (size_t i = 0; i < header.records; ++i) {
-  // uint32_t entry = (*get_entry<categorical_t>(data, i));
-  // std::cout << entry << ";";
-  // }
-  // std::cout << std::endl;
-
-
-  // Read hour_of_day
-  std::vector<uint8_t> data2;
-  typedef uint8_t categorical_t;
-  offset = 9;
-  get_data<categorical_t>(data2, offset);
-
-  // for (size_t i = 0; i < header.records; ++i) {
-  // uint32_t entry = (*get_entry<categorical_t>(data2, i));
-  // std::cout << entry << ";";
-  // }
-  // std::cout << std::endl;
-
-
-  // Read temporal
-  std::vector<uint8_t> data3;
-  typedef uint32_t temporal_t;
-  offset = 10;
-  get_data<temporal_t>(data3, offset);
-
-  // for (size_t i = 0; i < header.records; ++i) {
-  // uint32_t entry = (*get_entry<temporal_t>(data3, i));
-  // uint32_t value = static_cast<temporal_t>(entry / static_cast<float>(604800)) * 604800;
-  // std::cout << value << ";";
-  // }
-
-  // Read spatial
-  std::vector<uint8_t> data4;
-  offset = 0;
-  get_data<coordinates_t>(data4, offset);
-
-  // for (size_t i = 0; i < header.records; ++i) {
-  // coordinates_t entry = (*get_entry<coordinates_t>(data4, i));
-  // std::cout << entry.lat << std::endl;
-  // }
-
-  for (size_t i = 0; i < 10; ++i) {
-    uint32_t day_entry = (*get_entry<categorical_t>(data, i));
-
-    uint32_t hour_entry = (*get_entry<categorical_t>(data2, i));
-
-    uint32_t time_entry = (*get_entry<temporal_t>(data3, i));
-    uint32_t time_value = static_cast<temporal_t>(time_entry / static_cast<float>
-                          (604800)) * 604800;
-
-    coordinates_t coordinates_entry = (*get_entry<coordinates_t>(data4, i));
-
-    std::cout << day_entry << "," << hour_entry << "," << time_value << "," <<
-              coordinates_entry.lat << "," << coordinates_entry.lon << std::endl;
-  }
 
   return 0;
 }
